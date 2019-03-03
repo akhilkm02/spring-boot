@@ -1,0 +1,160 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/* custome code starts */
+.jumbotron{
+  padding: 2em; 
+  background-color: white; 
+  border-bottom: 1px solid grey;
+}
+.navbar-collapse.collapse{
+	margin-top: 2%;
+}	
+
+.container-fluid,.navbar-default {
+  background-color: white; 
+}	
+.cartimg{
+   height: 24px;
+}	
+	
+.navbar-nav{
+    font-weight: bold;
+}	
+
+.img-wrapper {
+  /* width:700px; */
+  /* clear:both; */
+}
+.smallImg {
+  /* background-color:red; */
+  float:left;
+  margin-right: 10px;
+  max-width: 100px;
+}
+.bigImage {
+  /* background-color:blue; */
+  /* width:300px; */
+  /* float:left; */
+}
+.smallImgContainer{
+    margin-bottom: 10px;	
+	padding: 0px;
+	cursor:pointer;
+}	
+.checked {
+  color: orange;
+}
+.productHeadingtext{
+	font-size: 36px;
+	font-weight: 500;
+	line-height: 1.1;
+	
+}	
+
+.textColor{
+	color: #777;
+}
+
+.pdp-attribute-label {
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    line-height: 36px;
+    font-family: 'BrandonGrotesque-Regular';
+    margin: 0;
+}
+.attribute-col {
+   padding: 4px 15px !important;
+   font-size: 16px !important;
+   margin-right: 10px;
+   border-radius: 12px !important;
+}	
+.product-attribute{
+	padding: 20px 0px 0px;
+}	
+
+.attrval_2_1 {
+   border: 1px outset black;
+   background-color: black;
+   height:50px;
+   width:50px;
+   cursor:pointer;
+   border-radius: 0px !important;
+}
+
+.attrval_2_1:hover {
+   background-color: black;
+   color:white;
+}
+.attrval_2_2 {
+   border: 1px outset lightgray;
+   background-color: lightgray;
+   height:50px;
+   width:50px;
+   cursor:pointer;
+   border-radius: 0px !important;
+}
+
+.attrval_2_2:hover {
+   background-color: lightgray;
+   color:white;
+}
+.attrval_2_3 {
+   border: 1px outset white;
+   background-color: white;
+   height:50px;
+   width:50px;
+   cursor:pointer;
+   border-radius: 0px !important;
+}
+
+.attrval_2_3:hover {
+   background-color: white;
+   color:white;
+}
+.attr2val{
+  font-weight: 600;
+}
+
+.priceMain{
+	display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+	font-size: 25px;
+	/* margin-top: 10px; */
+}	
+.quantity{
+	height: 36px;
+    min-width: 95px;
+    line-height: 36px;
+    padding: 0 10px;
+}
+.productPageAdd2Cart{
+	width: 80%;
+	height: 65px;
+	line-height: 2.4;
+    background-color: black;
+    color: white;
+    font-size: 29px;
+    font-family: "BrandonGrotesque-Medium" !important;
+	cursor: pointer;
+}
+@media (max-width: 767px) {
+    .pro-desc{
+		margin-left: 10%;
+	}
+	.jumbotron {
+     /* padding: 2em; */
+	}
+}
+
+@media (max-width: 400px) {
+.img-square{
+	width:100%;
+}
+}
