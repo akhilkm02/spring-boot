@@ -7,36 +7,25 @@ import {Images} from './components/Images';
 import {Attributes} from './components/Attributes'; 
 
 class App extends Component {
-
-   // state = {};
-    
     constructor () {
     	  super()
     	  this.state = {
-    	    username: ''
-    	  }
-    	  //this.handleClick = this.handleClick.bind(this)
+
+    	  } 
     }
 
     componentDidMount() {
-       // setInterval(this.hello, 250);
-        
-        fetch('http://localhost:3010/pdp/'+1234)
-        .then(response => response.json()) 
-        .then(message => {
-            this.setState({message: message});
-        	//this.setState(message => console.log(message));
-
-        });
-    }
-
-/*    hello = () => {
-        fetch('http://localhost:3010/pdp/'+1234)
-            .then(response => response.text()) 
+    	if (typeof window !== 'undefined') {
+    		var url=window.location.href;
+    		url=url.replace("3000","3010/pdp");//crap code need to remove
+            fetch(url)
+            .then(response => response.json()) 
             .then(message => {
                 this.setState({message: message});
             });
-    };*/  
+    	}
+
+    }
 
     render() { 
         var productDetails=this.state.message;
