@@ -1,9 +1,13 @@
 Steps to start:-
 
 1. Please install Mongo DB with Compass
+
 2. Create a DB entry
-   a. open postman 
-   http://localhost:3011/pdp/create  (POST)
+
+   a) open postman 
+   
+   
+   http://localhost:3013/pdp/create  (POST)
    {  
    "productName":"Wearever Cami",
    "productId":1000,
@@ -33,6 +37,7 @@ Steps to start:-
    "img3":"https://s7.jjill.com/is/image/JJill/159481_BACK?$pdp_thumb2$",
    "img4":"https://s7.jjill.com/is/image/JJill/159481_BACK?$pdp_thumb2$"
   }
+  
 3. Start the react js
    go to the path https://github.com/akhilkm02/spring-boot/tree/workspace/pdp-ui-service/frontend  --> npm start
 4. Start discovery-server
