@@ -2,8 +2,11 @@ Steps to start:-
 
 1. Please install Mongo DB with Compass
 2. Create a DB entry
-   a. open postman 
-   http://localhost:3011/pdp/create  (POST)
+
+   a) open postman 
+   
+   
+   http://localhost:3013/pdp/create  (POST)
    {  
    "productName":"Wearever Cami",
    "productId":1000,
@@ -35,7 +38,8 @@ Steps to start:-
   }
 3. Start the react js
    go to the path https://github.com/akhilkm02/spring-boot/tree/workspace/pdp-ui-service/frontend  --> npm start
-4. Start pdp-data-service, pdp-logic-service
+4. Start discovery-server
+5. Start zuul-api-gateway,pdp-data-service, pdp-logic-service
 
-Hit the below url http://localhost:3000/1000 :)   
+Hit the below url http://localhost:3010/1000 :)   
   
