@@ -7,6 +7,8 @@ Steps to start:-
    
    
    http://localhost:3013/pdp/create  (POST)
+   
+   
    {  
    "productName":"Wearever Cami",
    "productId":1000,
