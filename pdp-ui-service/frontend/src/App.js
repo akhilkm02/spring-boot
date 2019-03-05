@@ -17,7 +17,7 @@ class App extends Component {
     componentDidMount() {
     	if (typeof window !== 'undefined') {
     		var url=window.location.href;
-    		url=url.replace("3000","3010/pdp");//crap code need to remove
+    		url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
             fetch(url)
             .then(response => response.json()) 
             .then(message => {

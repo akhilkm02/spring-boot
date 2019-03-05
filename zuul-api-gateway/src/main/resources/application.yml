@@ -1,0 +1,9 @@
+ zuul:
+  routes:
+    logic:
+      path: /logic/**
+      serviceId: pdp-data-service
+    pdp:
+      path: /**
+      url: http://localhost:3000/  
+      

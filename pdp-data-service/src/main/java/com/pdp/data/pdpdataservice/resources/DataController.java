@@ -1,6 +1,7 @@
 package com.pdp.data.pdpdataservice.resources;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ import com.pdp.data.pdpdataservice.dal.PDPRepository;
 import com.pdp.data.pdpdataservice.pojo.ProductDetails;
 
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/pdp")
 public class DataController {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -41,9 +42,9 @@ public class DataController {
 	}
 
 	@RequestMapping(value = "/{productId}", method = RequestMethod.GET)
-	public ProductDetails getUser(@PathVariable String productId) {
-
-		return pdpRepository.findOne(productId);
+	public Optional<ProductDetails> getUser(@PathVariable String productId) {
+        System.out.println("here iam..........");
+		return pdpRepository.findById(productId);
 	}
 
 
