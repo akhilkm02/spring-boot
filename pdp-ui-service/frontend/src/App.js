@@ -32,7 +32,7 @@ class App extends Component {
         var attributes1=[];
         var attributes2=[];
         var attributes3=[];
-        if(productDetails){
+        if(productDetails  && productDetails.productId !=null){
         	 var productName =productDetails.productName;
         	 var productId=productDetails.productId;
         	 var rating=productDetails.rating;
