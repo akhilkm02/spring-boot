@@ -28,7 +28,7 @@ export class Header extends Component{
         						<ul className="nav navbar-nav navbar-right">
         						  <li className="active1"><a href="./">STORES <span className="sr-only">(current)</span></a></li>
         						  <li><a href="../navbar-static-top/">MY ACCOUNT</a></li>
-        						  <li><a href="../navbar-fixed-top/"><img className="img-responsive center-block cartimg" src="cart.png" alt="Jjill logo"/></a></li>
+        						  <li><a href="../navbar-fixed-top/"><img className="img-responsive center-block cartimg" src="/static/media/cart.png" alt="Jjill logo"/></a></li>
         						</ul>
         					  </div>
         				</nav>

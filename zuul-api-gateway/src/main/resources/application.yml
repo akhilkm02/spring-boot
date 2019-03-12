@@ -5,5 +5,5 @@
       serviceId: pdp-data-service
     pdp:
       path: /**
-      url: http://localhost:3000/  
+      serviceId: pdp-ui-service  
       

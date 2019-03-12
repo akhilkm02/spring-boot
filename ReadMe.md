@@ -38,10 +38,8 @@ Steps to start:-
    "img4":"https://s7.jjill.com/is/image/JJill/159481_BACK?$pdp_thumb2$"
   }
   
-3. Start the react js
-   go to the path https://github.com/akhilkm02/spring-boot/tree/workspace/pdp-ui-service/frontend  --> npm start
 4. Start discovery-server
-5. Start zuul-api-gateway,pdp-data-service, pdp-logic-service
+5. Start zuul-api-gateway,pdp-data-service, pdp-logic-service/pdp-logic-service
 
 Hit the below url http://localhost:3010/1000 :)   
   
