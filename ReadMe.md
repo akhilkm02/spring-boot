@@ -42,4 +42,15 @@ Steps to start:-
 5. Start zuul-api-gateway,pdp-data-service, pdp-logic-service/pdp-logic-service
 
 Hit the below url http://localhost:3010/1000 :)   
+
+update inventory:-
+--------------------------
+http://localhost:3015/inventory/updateInventory
+
+{  
+   "message":"There is only 100 left in stok hurry up !",
+   "availableStockCount":10,
+   "additionalMessage":"",
+   "productId":"1003"
+}
   
