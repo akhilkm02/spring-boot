@@ -1,8 +1,53 @@
 import React, {Component} from 'react';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 
 export class Attributes extends Component{
-
+	
+    constructor(props) {
+        super(props);
+        let currentComponent = this;
+        this.state = {
+        	inventoryText: "There are 10 item left in the stock Hurry up !",
+        	viewersText  : "There are 0 people(s) are viewing this item"
+        };
+        
+        //viewers
+        var stompClientv=null;
+		var socketv = new SockJS('http://localhost:3015/inventoryService');
+		stompClientv = Stomp.over(socketv); 
+		stompClientv.connect({"productId":window.location.pathname.replace("/","")}, function(frame) {
+			console.log('Connected: ' + frame);
+			stompClientv.subscribe('/product'+window.location.pathname, function(viewers) {
+				var content=JSON.parse(viewers.body).content;
+				console.log("count of viewers is "+content);
+				currentComponent.setState({
+					viewersText: content,
+				 });
+			});
+		}); 
+        
+        //inventory info
+		var stompClient=null;
+		var socket = new SockJS('http://localhost:3015/inventoryService');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({"productId":"all"}, function(frame) {
+			console.log('Connected: ' + frame);
+			stompClient.subscribe('/inventory'+window.location.pathname, function(data) {
+				var content=JSON.parse(data.body).content;	
+				var invMessage=JSON.parse(content).message;
+				currentComponent.setState({
+					inventoryText: invMessage,
+				 });
+			});
+		});        
+    }
+    
+    componentDidMount(){
+    	console.log("here comes the call...");
+    }
+    
     render() { 
         return (
         
@@ -80,6 +125,29 @@ export class Attributes extends Component{
       					</span>
       				  </div>
       			  </div>
+      			  
+      			  
+      			  <div className="row product-attribute inventory">
+  			      <div className="col-xs-4 col-lg-2 pdp-attribute-col">
+  				    <h4 className="pdp-attribute-label textColor"> Inventory	</h4>			 									
+  				  </div>
+  				  <div className="col-xs-8 col-lg-10 pdp-value-col textColor ">
+  	                <span className="pos-relative" id="inventory-info">
+  						<p className="pdp-attribute-label textColor" id="inventory-message">{this.state.inventoryText}</p>
+  					</span>
+  				  </div>
+  			    </div>
+  			    
+    			  <div className="row product-attribute viewers">
+  			      <div className="col-xs-4 col-lg-2 pdp-attribute-col">
+  				    <h4 className="pdp-attribute-label textColor"> Viewers	</h4>			 									
+  				  </div>
+  				  <div className="col-xs-8 col-lg-10 pdp-value-col textColor ">
+  	                <span className="pos-relative" id="viewers-info">
+  						<p className="pdp-attribute-label textColor" id="viewers-message">{this.state.viewersText}</p>
+  					</span>
+  				  </div>
+  			    </div>
       			  
       			  <div className="row product-attribute add to cart">
       			      <div className="col-xs-12 col-lg-12 col-sm-12  col-md-12 text-center">

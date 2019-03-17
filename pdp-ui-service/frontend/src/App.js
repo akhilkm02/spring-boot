@@ -9,22 +9,22 @@ import {Attributes} from './components/Attributes';
 class App extends Component {
     constructor () {
     	  super()
-    	  this.state = {
+    	  this.state = { 
 
     	  } 
-    }
-
+    } 
+    
     componentDidMount() {
-    	if (typeof window !== 'undefined') {
+    	if (typeof window !== 'undefined' && window.location.pathname != "/") {
     		var url=window.location.href;
     		url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
+    		//url='http://localhost:3012/pdp'+window.location.pathname;
             fetch(url)
             .then(response => response.json()) 
             .then(message => {
                 this.setState({message: message});
             });
     	}
-
     }
 
     render() { 
