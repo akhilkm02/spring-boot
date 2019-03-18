@@ -9,8 +9,8 @@ export class Attributes extends Component{
         super(props);
         let currentComponent = this;
         this.state = {
-        	inventoryText: "There are 10 item left in the stock Hurry up !",
-        	viewersText  : "There are 0 people(s) are viewing this item"
+        	inventoryText: "Inventory information is not available",
+        	viewersText  : "Loading the infomation ..."
         };
         
         //viewers
@@ -45,7 +45,7 @@ export class Attributes extends Component{
     }
     
     componentDidMount(){
-    	console.log("here comes the call...");
+
     }
     
     render() { 

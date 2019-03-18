@@ -25,6 +25,20 @@ class App extends Component {
                 this.setState({message: message});
             });
     	}
+    	
+    	
+    	console.log("here comes the call...");
+	    	setTimeout(function(){ 
+			var url="http://localhost:3015/inventory/getUserView"+window.location.pathname;
+			//url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
+			//url='http://localhost:3012/pdp'+window.location.pathname;
+	        fetch(url)
+	        .then(response => response.text()) 
+	        .then(message => {
+	            console.log(message);
+	        });
+        }, 1000);
+    	
     }
 
     render() { 

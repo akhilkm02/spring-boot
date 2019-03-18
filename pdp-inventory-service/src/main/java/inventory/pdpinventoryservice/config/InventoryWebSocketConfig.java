@@ -23,7 +23,7 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 
     @Autowired
     SimpMessagingTemplate template;
-	Map<String, String> poductMap = new HashMap<>();
+	public static Map<String, String> poductMap = new HashMap<>();
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
@@ -42,27 +42,19 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 
 	@EventListener(SessionConnectEvent.class)
 	public void handleWebsocketConnectListner(SessionConnectEvent event) {
-		System.out.println("SessionConnectEvent event : " + event);
 		StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-		System.out.println("SessionId : " + sha.getSessionId());
-		System.out.println("Native Headers : " + sha.getNativeHeader("productId").get(0));
 		if (!"all".equals(sha.getNativeHeader("productId").get(0))) {
 			poductMap.put(sha.getSessionId(), sha.getNativeHeader("productId").get(0));
-			System.out.println("poductMap=" + poductMap);
-			countNumberOfViewers(poductMap, sha.getNativeHeader("productId").get(0));
+			//countNumberOfViewers(poductMap, sha.getNativeHeader("productId").get(0)); //This is not working for the newly opened PDP
 		}
 
 	}
 
 	@EventListener(SessionDisconnectEvent.class)
 	public void handleWebsocketDisconnectListner(SessionDisconnectEvent event) {
-		System.out.println("SessionDisconnectEvent event : " + event);
 		StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-		System.out.println("SessionId : " + sha.getSessionId());
-		System.out.println("poductMap=" + poductMap);
 		String productId = findAndRemoveDisconnectedProduct(poductMap, sha.getSessionId());
-		System.out.println("after removing the product from poductMap =" + poductMap);
-		countNumberOfViewers(poductMap, productId);
+		countNumberOfViewers(poductMap, productId); 
 
 	}
 
@@ -75,7 +67,7 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 			}
 		});
 		System.out.println("Total viewers for the product  with product Id :" + productId + " is  " + numberOfViewers[0]);
-		broadcast(productId,"There are "+numberOfViewers[0]+ " of people  are currently viewing this item");
+		broadcast(productId,"There are "+numberOfViewers[0]+ " people currently viewing this item");
 	}
 
 
@@ -89,7 +81,6 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 		});
 
 		poductMap.remove(sessionId);
-		System.out.println("productId==" + productId[0]);
 		return productId[0];
 	}
 	
@@ -99,6 +90,14 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
         	 System.out.println("broadcasted with message : "+message);
          }
 		
+	}
+
+	public static Map<String, String> getPoductMap() {
+		return poductMap;
+	}
+
+	public static void setPoductMap(Map<String, String> poductMap) {
+		InventoryWebSocketConfig.poductMap = poductMap;
 	}
 
 }

@@ -1,5 +1,9 @@
 package inventory.pdpinventoryservice.model;
-
+/**
+ * Pojo for inventory details
+ * @author akhmohan
+ *
+ */
 public class InventoryDetails {
 
 	private String message;

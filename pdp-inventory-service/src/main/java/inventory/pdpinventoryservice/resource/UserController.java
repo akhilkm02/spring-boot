@@ -8,7 +8,11 @@ import org.springframework.stereotype.Controller;
 
 import inventory.pdpinventoryservice.model.InventoryResponse;
 import inventory.pdpinventoryservice.model.User;
-
+/**
+ * This class is used for chat http://localhost:3015/
+ * @author akhmohan
+ *
+ */
 @Controller
 public class UserController {
 
