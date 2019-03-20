@@ -25,10 +25,8 @@ class App extends Component {
                 this.setState({message: message});
             });
     	}
-    	
-    	
-    	console.log("here comes the call...");
-	    	setTimeout(function(){ 
+
+	    setTimeout(function(){ 
 			var url="http://localhost:3015/inventory/getUserView"+window.location.pathname;
 			//url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
 			//url='http://localhost:3012/pdp'+window.location.pathname;
@@ -66,7 +64,7 @@ class App extends Component {
 
         return (
 	        <div className="containerMain">				
-	          <div className="row">		
+	          <div className="jumbotron">		
 	            <Header/>
 	          </div>
 	          <div className="col-lg-6 col-md-12 col-sm-12">	

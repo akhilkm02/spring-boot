@@ -4,8 +4,7 @@ import React, {Component} from 'react';
 export class Header extends Component{
 	
     render() { 
-        return (
-        		  <div className="jumbotron">
+        return (       		
         			<div className="container">
         				<nav className="navbar1 navbar-default">
         					 <div className="navbar-header">
@@ -32,8 +31,7 @@ export class Header extends Component{
         						</ul>
         					  </div>
         				</nav>
-        			</div>
-        		</div>
+        			</div>     	
         );   
     }
 	

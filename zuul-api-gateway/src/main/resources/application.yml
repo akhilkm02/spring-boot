@@ -3,6 +3,9 @@
     logic:
       path: /logic/**
       serviceId: pdp-data-service
+    inventory:
+       path: /inv/**
+       serviceId: pdp-inventory-service    
     pdp:
       path: /**
       serviceId: pdp-ui-service  

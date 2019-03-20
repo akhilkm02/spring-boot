@@ -24,13 +24,7 @@ body {
 .navbar-nav{
     font-weight: bold;
 }	
-
-.img-wrapper {
-  /* width:700px; */
-  /* clear:both; */
-}
 .smallImg {
-  /* background-color:red; */
   float:left;
   margin-right: 10px;
   max-width: 100px;
@@ -60,7 +54,7 @@ body {
 }
 
 .pdp-attribute-label {
-    white-space: nowrap;
+   /* white-space: nowrap;*/
     text-transform: uppercase;
     font-size: 1.6rem;
     line-height: 36px;
@@ -157,4 +151,22 @@ body {
 .img-square{
 	width:100%;
 }
+}
+.sideImg{
+  width:100%;
+}
+
+@media (min-width: 100px) and (max-width: 1200px) {
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+    .navbar-collapse.collapse.in {
+        display: block !important;
+    }
+    .navbar-header .collapse, .navbar-toggle {
+        display:block !important;
+    }
+    .navbar-header {
+        float:none;
+    }
 }
