@@ -1,0 +1,36 @@
+version: '3'
+services:
+  eureka-server:
+    build: ./discovery-server/
+    ports:
+      - 8761:8761
+  pdp-data-service:
+    build: ./pdp-data-service/
+    depends_on:
+      - eureka-server
+    ports:
+      - 3013:3013
+  # pdp-inventory-service:
+  #   build: ./pdp-inventory-service/
+  #   depends_on:
+  #     - eureka-server
+  #   ports:
+  #     - 3015:3015
+  # pdp-logic-service:
+  #   build: ./pdp-logic-service/
+  #   depends_on:
+  #     - eureka-server
+  #   ports:
+  #     - 3012:3012
+  # pdp-ui-service:
+  #   build: ./pdp-ui-service/
+  #   depends_on:
+  #     - eureka-server
+  #   ports:
+  #     - 3014:3014
+  # zuul-api-gateway:
+  #   build: ./zuul-api-gateway/
+  #   depends_on:
+  #     - eureka-server
+  #   ports:
+  #     - 3010:3010

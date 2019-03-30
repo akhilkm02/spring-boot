@@ -1,7 +1,5 @@
 package io.demo.pdp.pdpuiservice.Controller;
 
-import javax.ws.rs.Produces;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,7 +12,6 @@ public class AppController {
    }
    
    @RequestMapping("/")
-   @Produces("text/plain")
    public String error() {
       return "error";
    }

@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.pdp.data.pdpdataservice.pojo.ProductDetails;
 
-
-
 public interface PDPDAL {
 
 	List<ProductDetails> getAllProducts();

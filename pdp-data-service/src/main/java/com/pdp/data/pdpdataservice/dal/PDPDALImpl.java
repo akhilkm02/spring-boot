@@ -16,7 +16,6 @@ public class PDPDALImpl implements PDPDAL {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-
 	@Override
 	public List<ProductDetails> getAllProducts() {
 		return mongoTemplate.findAll(ProductDetails.class);
@@ -38,13 +37,11 @@ public class PDPDALImpl implements PDPDAL {
 
 	@Override
 	public Object getAllProductSettings(String productId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getProductSetting(String productId, String key) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
