@@ -21,7 +21,7 @@ import com.pdp.data.pdpdataservice.pojo.ProductDetails;
 public class DataController {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
+	
 	@Autowired
 	private PDPRepository pdpRepository;
 
