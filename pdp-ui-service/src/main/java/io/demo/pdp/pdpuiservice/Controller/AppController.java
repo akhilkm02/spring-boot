@@ -1,26 +1,22 @@
 package io.demo.pdp.pdpuiservice.Controller;
 
-import javax.ws.rs.Produces;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class AppController {
 
-   @RequestMapping("/{productId}")
-   public String index() {
-      return "index";
-   }
-   
-   @RequestMapping("/")
-   @Produces("text/plain")
-   public String error() {
-      return "error";
-   }
-/*   @PostMapping("/hello")
-   public String sayHello(@RequestParam("name") String name, Model model) {
-      model.addAttribute("name", name);
-      return "hello";
-   }*/
+	@GetMapping("/{productId}")
+	public String getProduct(@PathVariable("productId") String productId, Model model) {
+		model.addAttribute("name", productId);
+		return "index";
+	}
+
+	@GetMapping("/")
+	public String error(Model model) {
+		model.addAttribute("error", "Empty Product Id");
+		return "error";
+	}
 }

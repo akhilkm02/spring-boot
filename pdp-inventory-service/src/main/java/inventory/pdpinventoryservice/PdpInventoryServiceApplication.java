@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PdpInventoryServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PdpInventoryServiceApplication.class, args); 
+	public static void main(String[] args) {  
+		SpringApplication.run(PdpInventoryServiceApplication.class, args);  
 	}
 
 }

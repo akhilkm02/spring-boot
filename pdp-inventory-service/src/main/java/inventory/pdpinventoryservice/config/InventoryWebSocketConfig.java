@@ -6,12 +6,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
@@ -19,10 +20,10 @@ import inventory.pdpinventoryservice.model.InventoryResponse;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class InventoryWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Autowired
-    SimpMessagingTemplate template;
+    private SimpMessageSendingOperations template;
 	public static Map<String, String> poductMap = new HashMap<>();
 
 	@Override
@@ -32,8 +33,11 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/product", "/inventory");
-
+		registry.enableStompBrokerRelay("/topic")
+		.setRelayHost("localhost")
+		.setRelayPort(61613)
+		.setClientLogin("guest")
+	    .setClientPasscode("guest");
 		/**
 		 * Not required for inventory since no info pass from browser to server
 		 */
@@ -86,7 +90,7 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 	
 	private void broadcast(String productId,String message) {
          if(!"all".equals(productId)) {
-        	 template.convertAndSend("/product/"+productId, new InventoryResponse(message));
+        	 template.convertAndSend("/topic/product."+productId, new InventoryResponse(message));
         	 System.out.println("broadcasted with message : "+message);
          }
 		
