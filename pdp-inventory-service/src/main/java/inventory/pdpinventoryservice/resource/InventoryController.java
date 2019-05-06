@@ -4,7 +4,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,7 @@ import inventory.pdpinventoryservice.model.InventoryResponse;
 public class InventoryController {
 
 	@Autowired
-	SimpMessagingTemplate template;
+	 private SimpMessageSendingOperations template;
 
 	@RequestMapping(value = "/updateInventory", method = RequestMethod.POST)
 	public void updateInventory(@RequestBody InventoryDetails inventoryDetails) {
@@ -40,7 +42,7 @@ public class InventoryController {
 		if (StringUtils.isBlank(productId)) {
 			productId = "user";// this is used for chat
 		}
-		template.convertAndSend("/inventory/" + productId, new InventoryResponse(json));
+		template.convertAndSend("/topic/" + productId, new InventoryResponse(json));
 
 	}
 
@@ -48,7 +50,7 @@ public class InventoryController {
 	public String getUserView(@PathVariable("productId") String productId) {
 
 		String message = countNumberOfViewers(InventoryWebSocketConfig.getPoductMap(), productId);
-		template.convertAndSend("/product/" + productId, new InventoryResponse(message));
+		template.convertAndSend("/topic/product." + productId, new InventoryResponse(message));
         return message;
 	}
 
