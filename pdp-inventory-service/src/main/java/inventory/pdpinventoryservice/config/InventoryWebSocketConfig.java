@@ -4,26 +4,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import inventory.pdpinventoryservice.model.InventoryResponse;
 
+@RestController
 @Configuration
 @EnableWebSocketMessageBroker
-public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class InventoryWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    @Autowired
-    SimpMessagingTemplate template;
+	/*
+	 * @Autowired private SimpMessageSendingOperations simpMessagetemplate;
+	 */
 	public static Map<String, String> poductMap = new HashMap<>();
+	
+	@Value("${rabbit.host}")
+	private String rabbitMqHost;
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
@@ -32,8 +39,12 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/product", "/inventory");
-
+		System.out.println("rabbitMqHost---------------"+rabbitMqHost);
+		registry.enableStompBrokerRelay("/topic")
+		.setRelayHost(rabbitMqHost)
+		.setRelayPort(61613)
+		.setClientLogin("guest")
+	    .setClientPasscode("guest");
 		/**
 		 * Not required for inventory since no info pass from browser to server
 		 */
@@ -86,7 +97,7 @@ public class InventoryWebSocketConfig extends AbstractWebSocketMessageBrokerConf
 	
 	private void broadcast(String productId,String message) {
          if(!"all".equals(productId)) {
-        	 template.convertAndSend("/product/"+productId, new InventoryResponse(message));
+        	// simpMessagetemplate.convertAndSend("/topic/product."+productId, new InventoryResponse(message));
         	 System.out.println("broadcasted with message : "+message);
          }
 		

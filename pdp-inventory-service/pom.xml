@@ -11,7 +11,7 @@
 	<groupId>io.demo.pdp</groupId>
 	<artifactId>pdp-inventory-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pdp-ui-service</name>
+	<name>pdp-inventory-service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -101,6 +101,24 @@
 			<artifactId>sockjs-client</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+		
+		
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-reactor-netty</artifactId>
+		</dependency>
+		
 	    
 	</dependencies>
 	
