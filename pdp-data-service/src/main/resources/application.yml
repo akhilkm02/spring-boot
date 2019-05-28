@@ -7,5 +7,5 @@ eureka:
 spring: 
  data:
   mongodb: 
-   host: ${HOSTNAME:localhost}
+   host: ${MONGO_HOSTNAME:localhost}
   
