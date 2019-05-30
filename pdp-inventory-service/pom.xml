@@ -11,7 +11,7 @@
 	<groupId>io.demo.pdp</groupId>
 	<artifactId>pdp-inventory-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pdp-ui-service</name>
+	<name>pdp-inventory-service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

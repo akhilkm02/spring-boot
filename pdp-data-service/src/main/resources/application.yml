@@ -1,0 +1,11 @@
+eureka: 
+  instance:
+    preferIpAddress: true 
+  client:
+    serviceUrl: 
+      defaultZone: http://${HOSTNAME:localhost}:8761/eureka/
+spring: 
+ data:
+  mongodb: 
+   host: ${MONGO_HOSTNAME:localhost}
+  

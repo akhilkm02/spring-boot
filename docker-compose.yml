@@ -1,0 +1,16 @@
+version: '2'
+services:
+  eureka-server:
+    image: rosenthal/eureka-server
+    expose:
+    - "8761"
+  user-registration:
+    image: rosenthal/user-registration
+    container_name: user-registration
+    ports:
+    - "9000:8080"
+    environment:
+      server.port: 8080
+      eureka.client.enabled: 'true'
+      eureka.host: eureka-server
+      eureka.instance.preferIpAddress: 'true'
