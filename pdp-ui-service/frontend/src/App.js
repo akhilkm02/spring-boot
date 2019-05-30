@@ -17,8 +17,11 @@ class App extends Component {
     componentDidMount() {
     	if (typeof window !== 'undefined' && window.location.pathname != "/") {
     		var url=window.location.href;
-    		url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
-    		//url='http://localhost:3012/pdp'+window.location.pathname;
+            if(window.location.port==3000 || window.location.port==5000){
+               url='http://localhost:3012/pdp'+window.location.pathname;
+            }else{
+               url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
+            }
             fetch(url)
             .then(response => response.json()) 
             .then(message => {
