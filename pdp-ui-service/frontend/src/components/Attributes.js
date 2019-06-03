@@ -19,7 +19,7 @@ export class Attributes extends Component{
 		stompClientv = Stomp.over(socketv); 
 		stompClientv.connect({"productId":window.location.pathname.replace("/","")}, function(frame) {
 			console.log('Connected: ' + frame);
-			stompClientv.subscribe('/product'+window.location.pathname, function(viewers) {
+			stompClientv.subscribe('/topic/product.'+window.location.pathname.replace("/",""), function(viewers) {
 				var content=JSON.parse(viewers.body).content;
 				console.log("count of viewers is "+content);
 				currentComponent.setState({
@@ -34,7 +34,7 @@ export class Attributes extends Component{
 		stompClient = Stomp.over(socket);
 		stompClient.connect({"productId":"all"}, function(frame) {
 			console.log('Connected: ' + frame);
-			stompClient.subscribe('/inventory'+window.location.pathname, function(data) {
+			stompClient.subscribe('/topic'+window.location.pathname, function(data) {
 				var content=JSON.parse(data.body).content;	
 				var invMessage=JSON.parse(content).message;
 				currentComponent.setState({
