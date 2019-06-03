@@ -1,16 +1,64 @@
-version: '2'
+version: '3'
 services:
   eureka-server:
-    image: rosenthal/eureka-server
+    image: akhilkm02/discovery-server
     expose:
-    - "8761"
-  user-registration:
-    image: rosenthal/user-registration
-    container_name: user-registration
+     - "8761"
     ports:
-    - "9000:8080"
+     - "8761:8761"
+  pdp-ui-service:
+    image: akhilkm02/pdp-ui-service
+    container_name: pdp-ui-service
+    ports:
+     - "3014:3014"
     environment:
-      server.port: 8080
-      eureka.client.enabled: 'true'
-      eureka.host: eureka-server
-      eureka.instance.preferIpAddress: 'true'
+      HOSTNAME: eureka-server
+  pdp-data-service:
+    image: akhilkm02/pdp-data-service
+    container_name: pdp-data-service
+    ports:
+     - "3013:3013"
+    environment:
+      HOSTNAME: eureka-server
+      MONGO_HOSTNAME: mongo-db
+    links:
+     - mongoDB  
+  pdp-logic-service:
+    image: akhilkm02/pdp-logic-service
+    container_name: pdp-logic-service
+    ports:
+     - "3012:3012"
+    environment:
+      HOSTNAME: eureka-server
+  zuul-api-gateway:
+    image: akhilkm02/zuul-api-gateway
+    container_name: zuul-api-gateway
+    ports:
+     - "3010:3010"
+    environment:
+      HOSTNAME: eureka-server
+  pdp-inventory-service:
+    image: akhilkm02/pdp-inventory-service
+    container_name: pdp-inventory-service
+    ports:
+     - "3015:3015"
+    links:
+     - rabbitmq  
+    environment:
+      HOSTNAME: eureka-server
+      RABBIT_HOSTNAME: rabbitmq-server
+  mongoDB:
+    image: mongo:4.0.4
+    container_name: mongo-db
+    ports:
+     - "27017:27017"
+  rabbitmq :
+    image: akhilkm02/rabbitmq 
+    container_name: rabbitmq-server
+    ports:
+     - "15671:15671"
+     - "15672:15672"
+     - "15674:15674"
+     - "61613:61613"
+      
+      
