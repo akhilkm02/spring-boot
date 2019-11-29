@@ -118,7 +118,7 @@ GCP setup
 
 7. Run "gcloud container clusters get-credentials hello-cluster --zone asia-northeast1-a --project pdp-ui-service" in the console  
 
-8. Run "cat > total.yml" then copy paste the content from "service-deployment-total.yml" the ctrl+cat
+8. Run "cat > total.yml" then copy paste the content from "service-deployment-total.yml" then "ctrl+c"
 
 9. Run "kubectl create -f total.yml"
 
