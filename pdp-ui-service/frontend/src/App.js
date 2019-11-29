@@ -5,29 +5,44 @@ import './App.css';
 import {Header} from './components/Header';  
 import {Images} from './components/Images'; 
 import {Attributes} from './components/Attributes'; 
+import {Error} from './components/Error'; 
 
 class App extends Component {
-    constructor () {
-    	  super()
-    	  this.state = { 
-
-    	  } 
-    } 
+    constructor (props) {
+          super(props)
+          this.state = { 
+            error: null,
+         isLoaded: false,
+          } 
+    }
     
     componentDidMount() {
-    	if (typeof window !== 'undefined' && window.location.pathname != "/") {
-    		var url=window.location.href;
-            if(window.location.port==3000 || window.location.port==5000){
-               url='http://localhost:3012/pdp'+window.location.pathname;
-            }else{
-               url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
+        let url=window.location.href;
+        let productDetails;
+        if(window.location.port==3000 || window.location.port==5000){
+           url='http://localhost:3012/pdp'+window.location.pathname;
+        }else{
+           url=url.replace(window.location.pathname,"/logic/pdp"+window.location.pathname);//crap code need to remove
+        }
+        fetch(url)
+          .then(res => res.json())
+          .then(
+            (result) => {
+                 this.setState({
+                      isLoaded: true,
+                      productDetails: result
+                 });
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error
+              });
             }
-            fetch(url)
-            .then(response => response.json()) 
-            .then(message => {
-                this.setState({message: message});
-            });
-    	}
+          )
 
 	    setTimeout(function(){ 
 			var url="http://localhost:3015/inventory/getUserView"+window.location.pathname;
@@ -43,27 +58,16 @@ class App extends Component {
     }
 
     render() { 
-        var productDetails=this.state.message;
-        var attributes1=[];
-        var attributes2=[];
-        var attributes3=[];
-        if(productDetails  && productDetails.productId !=null){
-        	 var productName =productDetails.productName;
-        	 var productId=productDetails.productId;
-        	 var rating=productDetails.rating;
-        	 var price=productDetails.price;
-        	 attributes1=productDetails.attributes1;
-        	 attributes2=productDetails.attributes2;
-        	 attributes3=productDetails.attributes3;
-        	 var attrName1=productDetails.attrName1;
-        	 var attrName2=productDetails.attrName2;
-        	 var attrName3=productDetails.attrName3;
-        	 var img1=productDetails.img1;
-        	 var img2=productDetails.img2;
-        	 var img3=productDetails.img3;
-        	 var img4=productDetails.img1;
-        	 var mainImg=productDetails.img1.replace("pdp_thumb2","pdp_main");
-        }
+        if (this.state.error) {
+          return <div>Error: {this.state.error.message}</div>;
+        } else if (this.state.productDetails==null && this.state.isLoaded){
+            return (<Error/>);
+        }else if (!this.state.isLoaded) {
+          return <div>Loading...</div>;
+        } else {
+            console.log("here iam "+this.state.productDetails);
+            const{productId,productName,rating,price,attributes1,attributes2,attributes3,attrName1,attrName2,attrName3,img1,img2,img3,img4}=this.state.productDetails;
+            const mainImg=img1.replace("pdp_thumb2","pdp_main"); 
 
         return (
 	        <div className="containerMain">				
@@ -77,7 +81,9 @@ class App extends Component {
 	              <Attributes attrName1={attrName1} attrName2={attrName2} attrName3={attrName3} productName={productName} price={price} attributes1={attributes1} attributes2={attributes2} attributes3={attributes3}  rating={rating}/>
 	           </div>
 	        </div>
-        );   
+        );  
+
+       }  
     }
 }
 
