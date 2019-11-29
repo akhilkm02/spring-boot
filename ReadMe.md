@@ -114,7 +114,7 @@ GCP setup
 
 5. Click on the arrow right top corner (Active cloud shell) to get console
 
-6. Run "gcloud container clusters delete hello-cluster  --zone=asia-northeast1-a" in the console  
+6. Run "gcloud container clusters create hello-cluster --num-nodes=2 --zone=asia-northeast1-a" in the console    
 
 7. Run "gcloud container clusters get-credentials hello-cluster --zone asia-northeast1-a --project pdp-ui-service" in the console  
 
@@ -168,6 +168,10 @@ Add product :-
    "img4":"https://s7.jjill.com/is/image/JJill/159481_BACK?$pdp_thumb2$"
   }
   
+Delete clusters :-
+
+
+Run "gcloud container clusters delete hello-cluster  --zone=asia-northeast1-a" in the console    
 
 
   
