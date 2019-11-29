@@ -1,0 +1,237 @@
+##all
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdp-logic
+  labels:
+    app: pdp-logic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdp-logic
+  template:
+    metadata:
+      labels:
+        app: pdp-logic
+    spec:
+      containers:
+        - image: akhilkm02/pdp-logic-service
+          resources:
+           requests:
+             #memory: "80mi"
+             cpu: "80m"
+           limits:
+            #memory: "80mi"
+            cpu: "150m"                
+          name: logic
+          env:
+          - name: HOSTNAME
+            value: discovery
+          ports:
+            - containerPort: 3012 
+             
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdp-ui
+  labels:
+    app: pdp-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdp-ui
+  template:
+    metadata:
+      labels:
+        app: pdp-ui
+    spec:
+      containers:
+        - image: akhilkm02/pdp-ui-service2
+          resources:
+           requests:
+             #memory: "80mi"
+             cpu: "80m"
+           limits:
+            #memory: "80mi"
+            cpu: "125m"              
+          name: ui
+          env:
+          - name: HOSTNAME
+            value: discovery
+          ports:
+            - containerPort: 3014
+            
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdp-zuul
+  labels:
+    app: pdp-zuul
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdp-zuul
+  template:
+    metadata:
+      labels:
+        app: pdp-zuul
+    spec:
+      containers:
+        - image: akhilkm02/zuul-api-gateway
+          resources:
+           requests:
+             #memory: "80mi"
+             cpu: "80m"
+           limits:
+            #memory: "80mi"
+            cpu: "125m"        
+          name: zuul
+          env:
+          - name: HOSTNAME
+            value: discovery
+          ports:
+            - containerPort: 3010
+             
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdp-data
+  labels:
+    app: pdp-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdp-data
+  template:
+    metadata:
+      labels:
+        app: pdp-data
+    spec:
+      containers:
+        - image: akhilkm02/pdp-data-service
+          resources:
+           requests:
+             #memory: "80mi"
+             cpu: "80m"
+           limits:
+            #memory: "80mi"
+            cpu: "150m"        
+          name: data          
+          env:
+          - name: HOSTNAME
+            value: discovery
+          - name: MONGO_HOSTNAME              
+            value: mongodb
+          ports:
+            - containerPort: 3013
+              
+---
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: mongodb  
+  labels:  
+    appdb: mongodb  
+spec:  
+  replicas: 1  
+  selector:  
+    matchLabels:  
+      appdb: mongodb  
+  template:  
+    metadata:  
+      labels:  
+        appdb: mongodb  
+    spec:  
+      containers:  
+        - name: mongodb  
+          image: mongo:3.6.6  
+          ports:  
+            - containerPort: 27017  
+---
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: mongodb  
+  labels:  
+    app: mongodb  
+spec:  
+  selector:  
+    appdb: mongodb
+  type: NodePort
+  ports:  
+    - port: 27017  
+      targetPort: 27017
+      protocol: TCP  
+---    
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdp-discovery
+  labels:
+    app: pdp-discovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdp-discovery
+  template:
+    metadata:
+      labels:
+        app: pdp-discovery
+    spec:
+      containers:
+        - image: akhilkm02/discovery-server
+          resources:
+           requests:
+             #memory: "80mi"
+             cpu: "100m"
+           limits:
+            #memory: "80mi"
+            cpu: "200m"
+          name: discovery
+          env:
+          - name: HOSTNAME
+            valueFrom:
+             fieldRef:
+              fieldPath: status.podIP
+          ports:
+            - containerPort: 8761
+             
+---
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: discovery  
+  labels:  
+    app: discovery  
+spec:  
+  selector:  
+    app: pdp-discovery
+  type: NodePort
+  ports:  
+    - port: 8761  
+      targetPort: 8761
+      protocol: TCP  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pdp
+  name: pdp
+spec:
+  type: LoadBalancer
+  selector:
+    app: pdp-zuul
+  ports:
+    - port: 80
+      targetPort: 3010
+      protocol: TCP
+      
